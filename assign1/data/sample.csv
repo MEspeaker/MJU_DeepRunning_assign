@@ -1,0 +1,4 @@
+name,professor,room,days,start,end
+Operating Systems,Dr. Kim,ENG-204,"Mon|Wed",10:30,11:45
+Linear Algebra,Prof. Lee,SCI-302,"Tue|Thu",09:00,10:15
+Deep Learning,Prof. Park,AI-101,Tue,13:00,14:45

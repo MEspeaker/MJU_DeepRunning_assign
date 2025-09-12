@@ -1,0 +1,154 @@
+Build a small automation project that sends me a KakaoTalk “Self Message” every morning at 08:00 Asia/Seoul with that day’s class schedule. The message must list, in order, each class’s name, classroom, and professor for the current date.
+
+Functional Requirements
+
+Input timetable
+
+Accept a user-editable timetable in one of these formats (support at least JSON and CSV):
+
+JSON example:
+
+{
+  "timezone": "Asia/Seoul",
+  "semester_start": "2025-09-01",
+  "semester_end": "2025-12-31",
+  "holidays": ["2025-09-16"],
+  "classes": [
+    {
+      "name": "Operating Systems",
+      "professor": "Dr. Kim",
+      "room": "ENG-204",
+      "days": ["Mon", "Wed"],
+      "start": "10:30",
+      "end": "11:45"
+    },
+    {
+      "name": "Linear Algebra",
+      "professor": "Prof. Lee",
+      "room": "SCI-302",
+      "days": ["Tue", "Thu"],
+      "start": "09:00",
+      "end": "10:15"
+    }
+  ]
+}
+
+
+CSV example (headers included):
+name,professor,room,days,start,end
+Operating Systems,Dr. Kim,ENG-204,"Mon|Wed",10:30,11:45
+
+Daily selection logic
+
+Determine today’s weekday in Asia/Seoul.
+
+Filter classes whose days include today.
+
+Ignore classes outside semester_start–semester_end or on listed holidays.
+
+Message format
+
+Title line: Today’s Classes (YYYY-MM-DD, ddd) using local date.
+
+For each class: HH:mm–HH:mm | <name> | <room> | <professor>
+
+If no classes today: send No classes today.
+
+Delivery channel: KakaoTalk “Self Message”
+
+Use Kakao Developers OAuth2 (Kakao Login) to obtain and store tokens.
+
+Call POST https://kapi.kakao.com/v2/api/talk/memo/send with a suitable text template payload to send to “My KakaoTalk (me)”.
+
+Handle token refresh automatically when the access token expires; persist tokens securely.
+
+Scheduling
+
+Run automatically every day at 08:00 Asia/Seoul.
+
+Provide both:
+a) a cross-platform scheduler option (e.g., Python APScheduler) and
+b) OS scheduler snippets (Linux cron, Windows Task Scheduler).
+
+Configuration & Secrets
+
+Read configuration from .env:
+
+KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET (if applicable), KAKAO_REDIRECT_URI, KAKAO_ACCESS_TOKEN, KAKAO_REFRESH_TOKEN, TIMEZONE=Asia/Seoul, optional MESSAGE_PREFIX.
+
+Include a one-time CLI to complete the OAuth authorization code flow and save tokens to a secure local file (e.g., tokens.json).
+
+Do not commit secrets; include .env.example.
+
+Error handling & observability
+
+Log structured events (INFO/WARN/ERROR) with timestamps.
+
+If the Kakao API call fails, retry with exponential backoff (max 3 attempts) and refresh token if needed.
+
+On final failure, write a local log entry describing the error.
+
+Validation
+
+Validate timetable rows (required fields, time format HH:mm, valid weekday strings).
+
+Provide a --dry-run flag that prints the message to stdout without sending.
+
+Internationalization
+
+Keep code comments in English; message content is English by default but allow overriding labels (e.g., to Korean) via a small template file.
+
+Test data & demo
+
+Include sample JSON/CSV under data/ that produces at least one class on Tuesdays at 08:00 to demonstrate formatting.
+
+Packaging & run
+
+Provide:
+
+README.md with setup steps (Kakao app creation, OAuth flow, .env population, how to import timetable).
+
+A single command to run locally: python main.py --once (send immediately using “today”).
+
+Optional Dockerfile and instructions to run via Docker + cron (use TZ=Asia/Seoul).
+
+Technical Stack (suggestion)
+
+Python 3.11+
+
+Libraries: requests, python-dotenv, pytz or zoneinfo, pydantic (for schema validation) or marshmallow, APScheduler (optional)
+
+Acceptance Criteria
+
+At 08:00 Asia/Seoul, the app sends a Kakao “Self Message” that exactly matches the computed classes for the day.
+
+If there are zero classes, the app sends a single “No classes today.” message.
+
+Running python main.py --dry-run prints the exact message body.
+
+Token refresh is automatic; no manual re-login is required after initial setup.
+
+File Structure (example)
+.
+├─ main.py
+├─ kakao_client.py
+├─ schedule_runner.py
+├─ timetable/
+│  ├─ loader.py
+│  ├─ models.py
+├─ data/
+│  ├─ sample.json
+│  └─ sample.csv
+├─ .env.example
+├─ README.md
+└─ Dockerfile
+
+Extra Details for Kakao API
+
+Use Authorization: Bearer <ACCESS_TOKEN>.
+
+For text, use the memo send API with a text template payload; include line breaks for each class.
+
+Implement a small kakao_auth.py script that spins up a localhost callback or prints the authorization URL and accepts the returned code to exchange tokens; save access_token, refresh_token, and expiry.
+
+Generate all source files, comments, and a clear README so I can run this in under 15 minutes after creating my Kakao app and obtaining tokens.

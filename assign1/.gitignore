@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Env
+.env
+tokens.json
+
+# IDE
+.vscode/
+.idea/

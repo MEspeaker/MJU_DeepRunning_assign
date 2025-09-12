@@ -1,0 +1,72 @@
+{
+  "timezone": "Asia/Seoul",
+  "semester_start": "2025-09-01",
+  "semester_end": "2025-12-31",
+  "holidays": ["2025-10-03","2025-10-06","2025-10-07","2025-10-08","2025-10-09"],
+  "classes": [
+    {
+      "name": "세계음식문화",
+      "professor": "강희진",
+      "room": "y9035",
+      "days": ["Mon"],
+      "start": "11:00",
+      "end": "12:50"
+    },
+    {
+      "name": "세계음식문화",
+      "professor": "강희진",
+      "room": "y9035",
+      "days": ["Wed"],
+      "start": "11:00",
+      "end": "11:50"
+    },
+    {
+      "name": "응급처치법",
+      "professor": "함주호",
+      "room": "y9001",
+      "days": ["Mon"],
+      "start": "13:00",
+      "end": "15:50"
+    },
+    {
+      "name": "딥러닝",
+      "professor": "조민경",
+      "room": "y5437",
+      "days": ["Tue"],
+      "start": "09:00",
+      "end": "10:50"
+    },
+    {
+      "name": "딥러닝",
+      "professor": "조민경",
+      "room": "y5437",
+      "days": ["Thu"],
+      "start": "10:00",
+      "end": "10:50"
+    },
+    {
+      "name": "클라우드 컴퓨팅",
+      "professor": "김직수",
+      "room": "y5437",
+      "days": ["Tue"],
+      "start": "15:00",
+      "end": "16:50"
+    },
+    {
+      "name": "클라우드 컴퓨팅",
+      "professor": "김직수",
+      "room": "y5437",
+      "days": ["Thu"],
+      "start": "15:00",
+      "end": "15:50"
+    },
+    {
+      "name": "테스트용",
+      "professor": "토요일",
+      "room": "y5437",
+      "days": ["Sat"],
+      "start": "10:00",
+      "end": "10:50"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+TZ=Asia/Seoul
+0 8 * * * python /app/main.py >> /var/log/cron.log 2>&1
